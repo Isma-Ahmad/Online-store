@@ -1,27 +1,17 @@
-
 const db = require('../models');
 
-const createProduct = async (productData) => {
-    try {
-        const product = await db.Product.create(productData);
-        return product;
-    } catch (error) {
-        throw new Error('Error creating product: ' + error.message);
-    }
-};
 
 const getAllProducts = async () => {
     try {
-        const products = await db.Product.findAll();
-        return products;
+        return await db.Product.findAll();
     } catch (error) {
         throw new Error('Error retrieving products: ' + error.message);
     }
 };
 
-const getProductById = async (productId) => {
+const getProduct = async (productId) => {
     try {
-        const product = await db.Product.findByPk(productId);
+        const product = await db.Product.findOne({ where: { product_id: productId } });
         if (!product) {
             throw new Error('Product not found');
         }
@@ -31,35 +21,45 @@ const getProductById = async (productId) => {
     }
 };
 
-const updateProduct = async (productId, updateData) => {
+const createProduct = async (productData) => {
     try {
-        const [updated] = await db.Product.update(updateData, { where: { product_id: productId } });
-        if (updated) {
-            const updatedProduct = await db.Product.findByPk(productId);
-            return updatedProduct;
+        return await db.Product.create(productData);
+    } catch (error) {
+        throw new Error('Error creating product: ' + error.message);
+    }
+};
+
+
+const updateProduct = async (productId, productData) => {
+    try {
+        const product = await db.Product.findOne({ where: { product_id: productId } });
+        if (!product) {
+            throw new Error('Product not found');
         }
-        throw new Error('Product not found');
+        return await product.update(productData);
     } catch (error) {
         throw new Error('Error updating product: ' + error.message);
     }
 };
 
+
 const deleteProduct = async (productId) => {
     try {
-        const deleted = await db.Product.destroy({ where: { product_id: productId } });
-        if (!deleted) {
+        const product = await db.Product.findOne({ where: { product_id: productId } });
+        if (!product) {
             throw new Error('Product not found');
         }
-        return { message: 'Product deleted successfully' };
+        await product.destroy();
     } catch (error) {
         throw new Error('Error deleting product: ' + error.message);
     }
 };
 
+
 module.exports = {
     createProduct,
-    getAllProducts,
-    getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProduct,
+    getAllProducts
 };

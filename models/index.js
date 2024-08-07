@@ -1,18 +1,15 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
-
-const sequelize = new Sequelize("Online_Store", "postgres", "1234", {
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize("Store", "postgres", "1234", {
     host: "localhost",
-    dialect: "postgres",
-  });
+    dialect: "postgres"
+});
 
 const db = {};
 
-
-db.User = require('./user')(sequelize, DataTypes);
-db.Product = require('./product')(sequelize, DataTypes);
-db.Order = require('./order')(sequelize, DataTypes);
-db.Record = require('./record')(sequelize, DataTypes);
+db.User = require('./user')(sequelize);
+db.Product = require('./product')(sequelize);
+db.Order = require('./order')(sequelize);
+db.Record = require('./record')(sequelize);
 
 
 db.User.hasMany(db.Order, { foreignKey: 'user_id' });
