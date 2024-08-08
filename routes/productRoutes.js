@@ -4,7 +4,7 @@ const authenticateToken = require('../middleware/userAuth');
 const productController = require('../controller/productController');
 
 
-router.get('/get/:id', authenticateToken, productController.getProduct);
+router.get('/get/:id', authenticateToken, productController.getProductById);
 
 router.get('/getAll', authenticateToken, productController.getAllProducts);
 

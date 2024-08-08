@@ -2,64 +2,61 @@ const orderService = require('../services/orderService');
 
 
 
-const getAllOrders = async (req, res) => {
- try{
-        const orders = await orderService.getAllOrders();
-        res.status(200).json(orders);
-}catch (error) {
-         next(error);
-        }
-};
-
-const getOrder = async (req, res) => {
-try{
-        const orderId = req.params.id;
-        const order = await orderService.getOrder(orderId);
-        res.status(200).json(order);
-}catch (error) {
-         next(error);
-        }
-};
-        
-
 const createOrder = async (req, res) => {
-try{
-        const orderData = { ...req.body, user_id: req.user.user_id };
-        const order = await orderService.createOrder(orderData);
+    
+        const userId = req.user.user_id;
+        const orderData = req.body;
+        const order = await orderService.createOrder(orderData, userId);
         res.status(201).json(order);
-}catch (error) {
-        next(error);
-    }
+   
+};
+
+
+const getAllOrders = async (req, res) => {
+   
+        const userId = req.user.user_id;
+        const userType = req.user.userType;
+        const orders = await orderService.getAllOrders(userId, userType);
+        res.status(200).json(orders);
+    
+};
+
+
+const getOrderById = async (req, res) => {
+ 
+        const userId = req.user.user_id;
+        const userType = req.user.userType;
+        const orderId = req.params.id;
+        const order = await orderService.getOrderById(orderId, userId, userType);
+        res.status(200).json(order);
+   
 };
 
 
 const updateOrder = async (req, res) => {
-try{
+  
+        const userType = req.user.userType;
         const orderId = req.params.id;
-        const orderData = req.body;
-        const order = await orderService.updateOrder(orderId, orderData);
-        res.status(200).json(order);
-}catch (error) {
-        next(error);
-    }
+        const updatedData = req.body;
+        const updatedOrder = await orderService.updateOrder(orderId, updatedData, userType);
+        res.status(200).json(updatedOrder);
+   
 };
 
 
 const deleteOrder = async (req, res) => {
-try{
+   
+        const userType = req.user.userType;
         const orderId = req.params.id;
-        await orderService.deleteOrder(orderId);
-        res.status(204).send(); 
-}catch (error) {
-        next(error);
-    }     
+        const result = await orderService.deleteOrder(orderId, userType);
+        res.status(200).json(result);
+   
 };
-
 
 module.exports = {
     createOrder,
+    getAllOrders,
+    getOrderById,
     updateOrder,
-    deleteOrder,
-    getOrder,
-    getAllOrders
+    deleteOrder
 };

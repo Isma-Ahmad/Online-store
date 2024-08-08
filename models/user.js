@@ -20,11 +20,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        // userType: {
-        //     type: DataTypes.ENUM('admin', 'customer'),
-        //     allowNull: false,
-        //     defaultValue: 'customer'
-        // }
+        userType: {
+            type: DataTypes.ENUM('admin', 'customer'),
+            allowNull: false
+        }
     }, { timestamps: true });
 
     return User;
