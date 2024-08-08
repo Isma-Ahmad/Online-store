@@ -19,7 +19,12 @@ module.exports = (sequelize) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        // userType: {
+        //     type: DataTypes.ENUM('admin', 'customer'),
+        //     allowNull: false,
+        //     defaultValue: 'customer'
+        // }
     }, { timestamps: true });
 
     return User;
