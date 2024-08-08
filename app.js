@@ -1,14 +1,18 @@
 const express= require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const db = require('./models');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const recordRoutes = require('./routes/recordRoutes');
+const errorHandler = require('./middleware/errorMiddleware')
 
 const PORT = 9000;
 
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json());
+app.use(errorHandler);
 
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
