@@ -36,7 +36,7 @@ db.Sequelize = Sequelize;
 //         await queryInterface.addColumn('Users', 'userType', {
 //             type: DataTypes.ENUM('admin', 'customer'),
 //             allowNull: false,
-//             defaultValue: 'customer' 
+
 //         });
 
 //         console.log('Column added successfully.');
