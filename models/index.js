@@ -33,17 +33,19 @@ db.Sequelize = Sequelize;
 //         const queryInterface = sequelize.getQueryInterface();
 
    
-//         await queryInterface.addColumn('Users', 'userType', {
-//             type: DataTypes.ENUM('admin', 'customer'),
-//             allowNull: false,
+//         await queryInterface.addColumn('Products', 'image', {
+//             type: DataTypes.BLOB,
+//             allowNull: true,
 
 //         });
 
 //         console.log('Column added successfully.');
 
 //     } catch (error) {
-//         console.error('Error updating column:', error);
-//     } finally {
+//         console.error('Error updating column:', error.message);
+//         console.error(error);
+//     } 
+//     finally {
     
 //         await sequelize.close();
 //     }

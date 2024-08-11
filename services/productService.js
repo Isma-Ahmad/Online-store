@@ -7,7 +7,12 @@ const createProduct = async (productData, userId) => {
         if (user.userType !== 'admin') {
             throw new Error('Only admins can add products');
         }
-        const product = await db.Product.create(productData);
+        const { image, ...productDetails } = productData;
+        let imageData = null;
+       if (image) {
+        imageData = image.buffer; 
+    }
+        const product = await db.Product.create({ ...productDetails, image : imageData});
         return product;
    
 };
@@ -38,6 +43,12 @@ const updateProduct = async (productId, updatedData, userId) => {
         }
         const product = await db.Product.findByPk(productId);
         if (!product) throw new Error('Product not found');
+        
+        const { image, ...productDetails } = updatedData;
+        if (image) {
+            productDetails.image = image.buffer;
+        }
+    
         return await product.update(updatedData);
    
 };

@@ -1,12 +1,19 @@
 const productService = require('../services/productService');
-
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 
 
 const createProduct = async (req, res) => {
  
         const userId = req.user.user_id;
-        const productData = req.body;
+        const productData = {
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+                stock: req.body.stock,
+                image: req.file ? req.file : null
+            };
         const product = await productService.createProduct(productData, userId);
         res.status(201).json(product);
     
@@ -34,7 +41,13 @@ const updateProduct = async (req, res) => {
 
         const userId = req.user.user_id;
         const productId = req.params.id;
-        const updatedData = req.body;
+        const updatedData = {
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+                stock: req.body.stock,
+                image: req.file ? req.file : null 
+            };
         const updatedProduct = await productService.updateProduct(productId, updatedData, userId);
         res.status(200).json(updatedProduct);
    
