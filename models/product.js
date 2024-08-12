@@ -22,8 +22,8 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        image: {
-            type: DataTypes.BLOB,
+        images: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: true
         }
     }, { timestamps: true });

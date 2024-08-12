@@ -11,7 +11,7 @@ const path = require('path');
 const PORT = 9000;
 
 app.use(express.json());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(errorHandler);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
